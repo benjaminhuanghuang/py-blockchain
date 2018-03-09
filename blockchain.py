@@ -16,13 +16,16 @@ block = {
 }
 
 '''
+from typing import Any, Dict, List, Optional
+from time import time
+
 class Blockchain:
     def __init__(self):
         self.chain = []
         self.current_transactions = []
         self.nodes = set()
 
-        # 创建创世块
+        # create the genesis(first) block
         self.new_block(previous_hash='1', proof=100)
 
     def register_node(self, address: str) -> None:
@@ -64,9 +67,8 @@ class Blockchain:
 
     def resolve_conflicts(self) -> bool:
         """
-        共识算法解决冲突
-        使用网络中最长的链.
-        :return:  如果链被取代返回 True, 否则为False
+        resolves conflicts by replacing our chain with the longest one in the network.
+        :return: <bool> True if our chain was replaced, False if not
         """
 
         neighbours = self.nodes
@@ -130,7 +132,7 @@ class Blockchain:
             'recipient': recipient,
             'amount': amount,
         })
-
+        # return the index fo the block that will hold this transaction
         return self.last_block['index'] + 1
 
     @property
@@ -140,7 +142,7 @@ class Blockchain:
     @staticmethod
     def hash(block: Dict[str, Any]) -> str:
         """
-        生成块的 SHA-256 hash值
+        create SHA-256 hash value for block
         :param block: Block
         """
 
@@ -150,9 +152,11 @@ class Blockchain:
 
     def proof_of_work(self, last_proof: int) -> int:
         """
-        简单的工作量证明:
-         - 查找一个 p' 使得 hash(pp') 以4个0开头
-         - p 是上一个块的证明,  p' 是当前的证明
+         Simple Proof of Work Algorithm:
+         - Find a number p' such that hash(pp') contains leading 4 zeroes, where p is the previous p'
+         - p is the previous proof, and p' is the new proof
+        :param last_proof: <int>
+        :return: <int>
         """
 
         proof = 0
@@ -164,10 +168,10 @@ class Blockchain:
     @staticmethod
     def valid_proof(last_proof: int, proof: int) -> bool:
         """
-        验证证明: 是否hash(last_proof, proof)以4个0开头
-        :param last_proof: Previous Proof
-        :param proof: Current Proof
-        :return: True if correct, False if not.
+        Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?
+        :param last_proof: <int> Previous Proof
+        :param proof: <int> Current Proof
+        :return: <bool> True if correct, False if not.
         """
 
         guess = f'{last_proof}{proof}'.encode()
