@@ -1,5 +1,7 @@
 ## Reference
-    - https://learnblockchain.cn/2017/10/27/build_blockchain_by_python/
+    - Learn Blockchains by Building One
+        - https://hackernoon.com/learn-blockchains-by-building-one-117428612f46 
+        - https://learnblockchain.cn/2017/10/27/build_blockchain_by_python/
         - https://github.com/xilibi2003/blockchain
 
 

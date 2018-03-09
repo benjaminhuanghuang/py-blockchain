@@ -1,7 +1,25 @@
+'''
+Data structure of block
+
+block = {
+    'index': 1,
+    'timestamp': 1506057125.900785,
+    'transactions': [
+        {
+            'sender': "8527147fe1f5426f9dd545de4b27ee00",
+            'recipient': "a77f5cdfa2934df3954a5c7c7da5df1f",
+            'amount': 5,
+        }
+    ],
+    'proof': 324984774000,
+    'previous_hash': "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+}
+
+'''
 class Blockchain:
     def __init__(self):
-        self.current_transactions = []
         self.chain = []
+        self.current_transactions = []
         self.nodes = set()
 
         # 创建创世块
@@ -79,7 +97,7 @@ class Blockchain:
 
     def new_block(self, proof: int, previous_hash: Optional[str]) -> Dict[str, Any]:
         """
-        生成新块
+        # Creates a new Block and adds it to the chain
         :param proof: The proof given by the Proof of Work algorithm
         :param previous_hash: Hash of previous Block
         :return: New Block
@@ -101,7 +119,7 @@ class Blockchain:
 
     def new_transaction(self, sender: str, recipient: str, amount: int) -> int:
         """
-        生成新交易信息，信息将加入到下一个待挖的区块中
+        # Adds a new transaction to the list of transactions
         :param sender: Address of the Sender
         :param recipient: Address of the Recipient
         :param amount: Amount
