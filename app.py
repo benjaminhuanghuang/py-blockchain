@@ -19,7 +19,7 @@ node_identifier = str(uuid4()).replace('-', '')
 # Instantiate the Blockchain
 blockchain = Blockchain()
 
-
+# Tell server to mine new block
 @app.route('/mine', methods=['GET'])
 def mine():
     # We run the proof of work algorithm to get the next proof...
@@ -63,7 +63,7 @@ def new_transaction():
     response = {'message': f'Transaction will be added to Block {index}'}
     return jsonify(response), 201
 
-
+# Return whole block chain
 @app.route('/chain', methods=['GET'])
 def full_chain():
     response = {
